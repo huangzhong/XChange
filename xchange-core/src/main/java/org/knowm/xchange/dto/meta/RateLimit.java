@@ -38,7 +38,8 @@ public class RateLimit {
    * @param timeSpan
    * @param timeUnit
    */
-  public RateLimit(@JsonProperty("calls") int calls, @JsonProperty("time_span") int timeSpan, @JsonProperty("time_unit") TimeUnit timeUnit) {
+  public RateLimit(@JsonProperty("calls") int calls, @JsonProperty("time_span") int timeSpan,
+      @JsonProperty("time_unit") @JsonDeserialize(using = TimeUnitDeserializer.class) TimeUnit timeUnit) {
 
     this.calls = calls;
     this.timeUnit = timeUnit;
@@ -60,4 +61,10 @@ public class RateLimit {
       return TimeUnit.valueOf(jp.getValueAsString().toUpperCase());
     }
   }
+
+  @Override
+  public String toString() {
+    return "RateLimit [calls=" + calls + ", timeSpan=" + timeSpan + ", timeUnit=" + timeUnit + "]";
+  }
+
 }
